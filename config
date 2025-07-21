@@ -236,11 +236,15 @@ exec_always --no-startup-id xset r rate 200 50
 # pip install i3ipc
 # pip3 install i3ipc
 # To automatically fullscreen every window when it opens in i3wm,
+# New windows: auto-fullscreen ✅
+# Switch between: restores their last fullscreen state ✅
 exec_always --no-startup-id ~/.config/i3/auto-fullscreen.py
+# Press F11: toggle and remember fullscreen state ✅
+bindsym F11 exec --no-startup-id i3-msg 'nop "trigger F11 handler"'
 # to track the last focused window and switch to it
 exec_always --no-startup-id ~/.config/i3/focus-tracker.py
 # to focus the last focused window
-bindsym $mod+comma exec --no-startup-id ~/.config/i3/focus-last.py
+bindsym --release $mod+comma exec --no-startup-id ~/.config/i3/focus-last.py
 # Trigger the mode
 bindsym $mod+n exec --no-startup-id rofi -show drun -theme ~/.config/rofi/config.rasi
 # Use rofi as a run dialog
