@@ -20,7 +20,18 @@ def set_fullscreen_later(window_id, delay=0.05):
 # New window handler
 def on_new_window(i3, e):
     win = e.container
-    if win.window:  # Check if it's a real window
+    if not win.window:
+        return
+
+    app = win.app_id or win.window_class  # fallback depending on your system
+
+    # Only Firefox should start in non-fullscreen
+    is_fullscreen = False if app and 'firefox' in app.lower() else True
+
+    with state_lock:
+        window_states[win.id] = is_fullscreen
+
+    if is_fullscreen:
         threading.Thread(target=set_fullscreen_later, args=(win.id,)).start()
 
 # Focused window change handler
